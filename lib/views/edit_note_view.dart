@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_space/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_space/models/note_model.dart';
-import 'package:note_space/views/widgets/custom_app_bar.dart';
+import 'package:note_space/views/widgets/custom_icon.dart';
 
 class EditNoteView extends StatefulWidget {
   final NoteModel note;
@@ -39,19 +39,30 @@ class _EditNoteViewState extends State<EditNoteView> {
         child: Column(
           children: [
             const SizedBox(height: 44.0),
-            CustomAppBar(
-              onPressed: () {
-                widget.note.title = _titleController.text;
-                widget.note.content = _contentController.text;
-                widget.note.save();
+            // Replace CustomAppBar with Row
+            Row(
+              children: [
+                const Text(
+                  'Edit Note',
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
+                ),
+                const Spacer(),
+                CustomIcon(
+                  icon: Icons.check,
+                  onPressed: () {
+                    widget.note.title = _titleController.text;
+                    widget.note.content = _contentController.text;
+                    widget.note.save();
 
-                BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
-
-                Navigator.pop(context);
-              },
-              icon2: Icons.check,
-              title: 'Edit Note',
+                    BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
+                    Navigator.pop(context); // Navigate back
+                  },
+                ),
+                const SizedBox(width: 16.0), // Add space between icon and title
+              ],
             ),
+            const SizedBox(
+                height: 16.0), // Add space between Row and TextFields
             TextField(
               controller: _titleController,
               decoration: const InputDecoration(

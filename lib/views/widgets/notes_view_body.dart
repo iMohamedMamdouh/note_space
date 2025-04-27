@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_space/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_space/models/note_model.dart';
 import 'package:note_space/theme.dart';
+import 'package:note_space/views/delete_note_view.dart';
 import 'package:note_space/views/search_note_view.dart';
 import 'package:note_space/views/widgets/custom_app_bar.dart';
 import 'package:note_space/views/widgets/notes_list_view.dart';
@@ -51,8 +52,12 @@ class _NotesViewBodyState extends State<NotesViewBody> {
               leading: const Icon(Icons.delete),
               title: const Text('Deleted Notes'),
               onTap: () {
-                // Handle deleted notes action here
-                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const DeletedNotesScreen()), // Navigate to DeletedNotesScreen
+                );
               },
             ),
             ListTile(
@@ -86,7 +91,7 @@ class _NotesViewBodyState extends State<NotesViewBody> {
             const SizedBox(height: 44.0),
             // Custom AppBar with search icon
             CustomAppBar(
-              icon: Icons.search,
+              icon1: Icons.search,
               icon2: Icons.checklist,
               icon3: Icons.info_outline,
               title: 'Notes',

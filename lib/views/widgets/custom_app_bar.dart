@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_space/views/search_note_view.dart';
+import 'package:note_space/views/task_screen.dart';
 import 'package:note_space/views/widgets/custom_icon.dart'; // Import the SearchNotesView
 
 class CustomAppBar extends StatelessWidget {
@@ -7,13 +7,13 @@ class CustomAppBar extends StatelessWidget {
     super.key,
     required this.title,
     this.icon3,
-    this.icon,
+    this.icon1,
     required this.icon2,
     this.onPressed,
   });
 
   final String title;
-  final IconData? icon;
+  final IconData? icon1;
   final IconData? icon3;
   final IconData icon2;
   final void Function()? onPressed;
@@ -28,20 +28,18 @@ class CustomAppBar extends StatelessWidget {
             style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
           ),
         ),
-        if (icon != null) CustomIcon(onPressed: onPressed, icon: icon!),
-        CustomIcon(
+        if (icon1 != null) CustomIcon(onPressed: onPressed, icon: icon1!),
+        IconButton(
           onPressed: () {
-            // Navigate to the search page when icon2 is clicked
+            // Navigate to TaskScreen when icon2 is clicked
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SearchNotesView(
-                  allNotes: [], // Pass the notes data to the search page
-                ),
-              ),
+                  builder: (context) =>
+                      const TaskScreen()), // Navigate to TaskScreen
             );
           },
-          icon: icon2,
+          icon: Icon(icon2),
         ),
         if (icon3 != null)
           IconButton(
