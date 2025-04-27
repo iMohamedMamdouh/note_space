@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "520293056473",
-    "project_id": "note-space-5c141",
-    "storage_bucket": "note-space-5c141.firebasestorage.app"
+    "project_number": "642838688792",
+    "project_id": "notespace-1c163",
+    "storage_bucket": "notespace-1c163.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:520293056473:android:633175b062b104eedbe3c8",
+        "mobilesdk_app_id": "1:642838688792:android:9a66e8947717f5fc21bf6d",
         "android_client_info": {
-          "package_name": "com.example.note_space"
+          "package_name": "com.example.noteSpace"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDHC30Cfh6FxN2wKT-yY4YfN0PxxfDoD9Q"
+          "current_key": "AIzaSyCQeQ02A_BV43VAgtyhx4AU3pISGC8Zd7A"
         }
       ],
       "services": {

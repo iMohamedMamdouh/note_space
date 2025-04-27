@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:note_space/views/notes_view.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -8,18 +10,16 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // For loading state (optional)
   bool _isLoading = false;
 
-  // Function to handle sign-in
   void _signIn() {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    // Validation (basic)
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all fields')),
@@ -28,37 +28,47 @@ class _SignInState extends State<SignIn> {
     }
 
     setState(() {
-      _isLoading = true; // Set loading state
+      _isLoading = true;
     });
 
-    // Call sign-in logic (e.g., Firebase Auth) here
-    // For now, we'll simulate a delay
-    Future.delayed(const Duration(seconds: 2), () {
+    // Use signInWithEmailAndPassword for existing users
+    auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((userCredential) {
       setState(() {
-        _isLoading = false; // Stop loading state
+        _isLoading = false;
       });
 
-      // If sign-in succeeds, navigate to another screen, like a dashboard
-      // For now, just show a success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Sign-In Successful')),
       );
 
-      // Navigate to another screen (e.g., Home)
-      // Navigator.pushReplacementNamed(context, '/home');
+      // Navigate to the NotesView screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NotesView()),
+      );
+    }).catchError((e) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Handle sign-in error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign-In Failed: ${e.toString()}')),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF252525), // Set background color
+      backgroundColor: const Color(0xFF252525),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Title (Text)
             const Text(
               'Sign In',
               style: TextStyle(
@@ -69,50 +79,57 @@ class _SignInState extends State<SignIn> {
             ),
             const SizedBox(height: 40.0),
 
-            // Email input field
+            // Email input
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
+                contentPadding: EdgeInsets.only(top: 1),
                 labelText: 'Email',
-                prefixIcon: Icon(Icons.email),
-                filled: true,
                 fillColor: Colors.white,
               ),
               keyboardType: TextInputType.emailAddress,
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 8.0),
 
-            // Password input field
+            // Password input with "Forgot Password?"
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                prefixIcon: Icon(Icons.lock),
-                filled: true,
-                fillColor: Colors.white,
-              ),
               obscureText: true,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(top: 1),
+                labelText: 'Password',
+                suffix: TextButton(
+                  onPressed: () {
+                    // Navigator.pushNamed(context, '/resetPassword');
+                  },
+                  child: const Text(
+                    'Forgot password?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 32.0),
 
-            // Sign-In Button - Full Width
+            // Sign-In button
             _isLoading
                 ? const CircularProgressIndicator()
                 : SizedBox(
-                    width: double.infinity, // Make the button full width
+                    width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _signIn,
+                      onPressed: () {
+                        _signIn();
+                      },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                       ),
                       child:
-                          const Text('Login', style: TextStyle(fontSize: 18)),
+                          const Text('Login', style: TextStyle(fontSize: 22)),
                     ),
                   ),
-
             const SizedBox(height: 16.0),
-
-            // Register or Forgot Password options
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -120,26 +137,16 @@ class _SignInState extends State<SignIn> {
                     style: TextStyle(color: Colors.white)),
                 TextButton(
                   onPressed: () {
-                    // Navigate to Sign Up screen (you need to implement this)
-                    // Navigator.pushNamed(context, '/signUp');
+                    // Navigate to Sign-Up screen
+                    Navigator.pushReplacementNamed(context, '/signUp');
                   },
-                  child: const Text('Sign Up',
-                      style: TextStyle(color: Colors.blue)),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Forgot your password?',
-                    style: TextStyle(color: Colors.white)),
-                TextButton(
-                  onPressed: () {
-                    // Navigate to Password Reset screen (you need to implement this)
-                    // Navigator.pushNamed(context, '/resetPassword');
-                  },
-                  child: const Text('Reset Password',
-                      style: TextStyle(color: Colors.blue)),
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
               ],
             ),

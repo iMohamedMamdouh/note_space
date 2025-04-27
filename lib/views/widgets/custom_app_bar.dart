@@ -5,6 +5,7 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     required this.title,
+    this.icon3,
     this.icon,
     required this.icon2,
     this.onPressed,
@@ -12,6 +13,7 @@ class CustomAppBar extends StatelessWidget {
 
   final String title;
   final IconData? icon;
+  final IconData? icon3;
   final IconData icon2;
   final void Function()? onPressed;
 
@@ -22,14 +24,19 @@ class CustomAppBar extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
           ),
         ),
         if (icon != null) CustomIcon(onPressed: onPressed, icon: icon!),
-        const SizedBox(width: 21),
-        CustomIcon(
-            onPressed: onPressed,
-            icon: icon2), // Only show if icon2 is provided
+        CustomIcon(onPressed: onPressed, icon: icon2),
+        if (icon3 != null)
+          IconButton(
+            icon: Icon(icon3),
+            onPressed: () {
+              Scaffold.of(context)
+                  .openDrawer(); // Open the drawer when icon3 is clicked
+            },
+          ),
       ],
     );
   }

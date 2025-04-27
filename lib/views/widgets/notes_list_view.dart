@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_space/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_space/models/note_model.dart';
 import 'package:note_space/views/widgets/show_dialog_for_delete.dart';
+import 'package:note_space/views/widgets/empty_view.dart';
 
 class NotesListView extends StatelessWidget {
   const NotesListView({super.key});
@@ -15,7 +16,7 @@ class NotesListView extends StatelessWidget {
             BlocProvider.of<ReadNotesCubit>(context).readNotes ?? [];
 
         if (readNotes.isEmpty) {
-          return const Center(child: Text('No notes available'));
+          return const EmptyView();
         }
 
         readNotes = readNotes.reversed.toList();

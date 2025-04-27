@@ -21,7 +21,6 @@ class NotesItem extends StatelessWidget {
 
         if (updatedNote != null) {
           // Handle the updated note (e.g., refresh the list)
-          // This depends on how you manage state in your app
         }
       },
       child: Container(
@@ -68,10 +67,9 @@ class NotesItem extends StatelessWidget {
                 ],
               ),
             ),
-            // Positioned widget for the date
             Positioned(
-              bottom: 8, // Adjust the distance from the bottom
-              right: 16, // Adjust the distance from the right
+              bottom: 8,
+              right: 16,
               child: Text(
                 note.date,
                 style: TextStyle(

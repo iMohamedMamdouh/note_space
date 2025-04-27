@@ -12,3 +12,11 @@ class ReadNotesUpdated extends ReadNotesState {
 
   ReadNotesUpdated({required this.readNotes});
 }
+
+final class ReadNotesDeletedSuccess extends ReadNotesState {}
+
+class ReadNotesRestored extends ReadNotesState {
+  final List<NoteModel>? readNotes;
+
+  ReadNotesRestored({required this.readNotes});
+}

@@ -1,3 +1,23 @@
+// 1. buildscript comes FIRST
+buildscript {
+    ext.kotlin_version = '1.8.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.15'
+    }
+}
+
+// 2. Then plugins block
+plugins {
+    id("com.google.gms.google-services") version "4.4.2" apply false
+}
+
+// 3. Then allprojects block
 allprojects {
     repositories {
         google()
@@ -5,32 +25,19 @@ allprojects {
     }
 }
 
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.15'
-    }
-
-}
-
-val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
+// 4. Then the rest
+def newBuildDir = rootProject.layout.buildDirectory.dir("../../build").get()
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
-    val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
+    def newSubprojectBuildDir = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register<Delete>("clean") {
+tasks.register('clean', Delete) {
     delete(rootProject.layout.buildDirectory)
 }

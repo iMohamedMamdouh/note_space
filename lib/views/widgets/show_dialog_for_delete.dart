@@ -51,7 +51,11 @@ class ShowDialogForDelete extends StatelessWidget {
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () => Navigator.of(context).pop(true),
+                        onPressed: () {
+                          BlocProvider.of<ReadNotesCubit>(context)
+                              .deleteNote(note);
+                          Navigator.of(context).pop(true);
+                        },
                         child: const Text("Delete"),
                       ),
                     ],
@@ -67,7 +71,6 @@ class ShowDialogForDelete extends StatelessWidget {
         if (direction == DismissDirection.endToStart ||
             direction == DismissDirection.startToEnd) {
           BlocProvider.of<ReadNotesCubit>(context).deleteNote(note);
-
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('${note.title} deleted')),
           );
