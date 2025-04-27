@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_space/cubits/read_notes_cubit/read_notes_cubit.dart';
+import 'package:note_space/models/note_model.dart';
 import 'package:note_space/theme.dart';
+import 'package:note_space/views/search_note_view.dart';
 import 'package:note_space/views/widgets/custom_app_bar.dart';
 import 'package:note_space/views/widgets/notes_list_view.dart';
 
@@ -15,8 +17,9 @@ class NotesViewBody extends StatefulWidget {
 class _NotesViewBodyState extends State<NotesViewBody> {
   @override
   void initState() {
-    BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
     super.initState();
+    // استرجاع الملاحظات عند تحميل الصفحة
+    BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
   }
 
   @override
@@ -76,19 +79,41 @@ class _NotesViewBodyState extends State<NotesViewBody> {
           ],
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0),
         child: Column(
           children: [
-            SizedBox(height: 44.0),
+            const SizedBox(height: 44.0),
+            // Custom AppBar with search icon
             CustomAppBar(
-              icon: Icons.checklist,
-              icon2: Icons.search,
+              icon: Icons.search,
+              icon2: Icons.checklist,
               icon3: Icons.info_outline,
               title: 'Notes',
+              onPressed: () {
+                // عند الضغط على أيقونة البحث، افتح صفحة البحث وتمرير الملاحظات
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return BlocBuilder<ReadNotesCubit, ReadNotesState>(
+                        builder: (context, state) {
+                          List<NoteModel> readNotes =
+                              BlocProvider.of<ReadNotesCubit>(context)
+                                      .readNotes ??
+                                  [];
+                          return SearchNotesView(
+                              allNotes: readNotes); // تمرير الملاحظات
+                        },
+                      );
+                    },
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 8.0),
-            Expanded(child: NotesListView()),
+            const SizedBox(height: 8.0),
+            // عرض قائمة الملاحظات
+            const Expanded(child: NotesListView()),
           ],
         ),
       ),

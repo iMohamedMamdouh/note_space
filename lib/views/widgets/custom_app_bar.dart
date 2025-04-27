@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_space/views/widgets/custom_icon.dart';
+import 'package:note_space/views/search_note_view.dart';
+import 'package:note_space/views/widgets/custom_icon.dart'; // Import the SearchNotesView
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -28,7 +29,20 @@ class CustomAppBar extends StatelessWidget {
           ),
         ),
         if (icon != null) CustomIcon(onPressed: onPressed, icon: icon!),
-        CustomIcon(onPressed: onPressed, icon: icon2),
+        CustomIcon(
+          onPressed: () {
+            // Navigate to the search page when icon2 is clicked
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SearchNotesView(
+                  allNotes: [], // Pass the notes data to the search page
+                ),
+              ),
+            );
+          },
+          icon: icon2,
+        ),
         if (icon3 != null)
           IconButton(
             icon: Icon(icon3),

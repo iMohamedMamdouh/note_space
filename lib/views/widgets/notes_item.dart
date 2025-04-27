@@ -39,10 +39,12 @@ class NotesItem extends StatelessWidget {
                     title: Text(
                       note.title,
                       style: const TextStyle(
-                        fontSize: 32,
+                        fontSize: 24,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -57,7 +59,7 @@ class NotesItem extends StatelessWidget {
                           note.content,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 14,
+                            fontSize: 16,
                             color: Colors.black.withOpacity(0.5),
                           ),
                         ),
