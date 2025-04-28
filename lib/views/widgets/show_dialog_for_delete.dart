@@ -52,8 +52,6 @@ class ShowDialogForDelete extends StatelessWidget {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {
-                          BlocProvider.of<ReadNotesCubit>(context)
-                              .deleteNote(note);
                           Navigator.of(context).pop(true);
                         },
                         child: const Text("Delete"),

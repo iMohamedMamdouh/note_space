@@ -23,15 +23,61 @@ class DeletedNotesScreen extends StatelessWidget {
             itemCount: deletedNotes.length,
             itemBuilder: (context, index) {
               final note = deletedNotes[index];
-              return ListTile(
-                title: Text(note.title),
-                subtitle: Text(note.content),
-                trailing: IconButton(
-                  icon: const Icon(Icons.restore),
-                  onPressed: () {
-                    BlocProvider.of<ReadNotesCubit>(context).restoreNote(note);
-                  },
-                ),
+              return Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      note.title,
+                                      style: const TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6.0),
+                                    Text(
+                                      note.content ??
+                                          'No description available',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.white70,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.restore),
+                                onPressed: () {
+                                  BlocProvider.of<ReadNotesCubit>(context)
+                                      .restoreNote(note);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
             },
           );

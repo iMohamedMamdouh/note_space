@@ -57,10 +57,9 @@ class _SearchNotesViewState extends State<SearchNotesView> {
             const SizedBox(height: 16.0),
             Expanded(
               child: filteredNotes.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'No notes found',
-                        style: TextStyle(fontSize: 18),
+                  ? Center(
+                      child: Image.asset(
+                        'assets/images/cuate.png',
                       ),
                     )
                   : ListView.builder(

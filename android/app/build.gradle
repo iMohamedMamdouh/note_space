@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // يجب تطبيق Flutter Gradle Plugin بعد Android و Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
 }
@@ -10,8 +10,8 @@ android {
     namespace = "com.example.note_space"
     compileSdk = flutter.compileSdkVersion
 
-    // Set the required NDK version here
-    ndkVersion = "27.0.12077973"  // Specify the correct NDK version
+    // تعيين إصدار NDK المطلوب هنا
+    ndkVersion = "27.0.12077973"  // تحديد إصدار NDK الصحيح
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.noteSpace"
-        minSdk = 23  // Set minSdkVersion to 23 (or higher)
+        minSdk = 23  // تعيين minSdkVersion إلى 23 أو أعلى
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -38,13 +38,13 @@ android {
 }
 
 flutter {
-    source = "../.."
+    source = "../.."  // تأكد أن هذه المسار يشير إلى مصدر مشروع Flutter الصحيح
 }
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"  // تأكد من صحة نسخة Kotlin
 }
 
-apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'  // تطبيق Google Services plugin

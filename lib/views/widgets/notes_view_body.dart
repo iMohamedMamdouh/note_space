@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_space/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_space/models/note_model.dart';
 import 'package:note_space/theme.dart';
+import 'package:note_space/views/change_password_view.dart';
 import 'package:note_space/views/delete_note_view.dart';
 import 'package:note_space/views/search_note_view.dart';
 import 'package:note_space/views/widgets/custom_app_bar.dart';
@@ -19,7 +20,6 @@ class _NotesViewBodyState extends State<NotesViewBody> {
   @override
   void initState() {
     super.initState();
-    // استرجاع الملاحظات عند تحميل الصفحة
     BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
   }
 
@@ -64,8 +64,13 @@ class _NotesViewBodyState extends State<NotesViewBody> {
               leading: const Icon(Icons.lock_outline_rounded),
               title: const Text('Change Password'),
               onTap: () {
-                // Handle change password action here
-                Navigator.pop(context); // Close the drawer
+                // Navigate to the ChangePasswordScreen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChangePasswordScreen(),
+                  ),
+                );
               },
             ),
             ListTile(

@@ -78,130 +78,149 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF252525),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 40.0),
-
-            // Full Name input
-            TextField(
-              controller: _fullNameController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 1),
-                labelText: 'Full Name',
-                fillColor: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-
-            // Email input
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 1),
-                labelText: 'Email',
-                fillColor: Colors.white,
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 8.0),
-
-            // Password input with show/hide icon
-            TextField(
-              controller: _passwordController,
-              obscureText: _obscurePassword,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(top: 1),
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+      body: Center(
+        // Center widget to center everything
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            // Ensures scrolling if content overflows
+            child: Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Centers content vertically
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Centers content horizontally
+              children: [
+                const Text(
+                  'Sign Up',
+                  style: TextStyle(
                     color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
+                  textAlign: TextAlign.center, // Centered text
                 ),
-              ),
-            ),
-            const SizedBox(height: 8.0),
+                const SizedBox(height: 40.0),
 
-            // Confirm Password input with show/hide icon
-            TextField(
-              controller: _confirmPasswordController,
-              obscureText: _obscureConfirmPassword,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(top: 1),
-                labelText: 'Confirm Password',
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureConfirmPassword
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Colors.white,
+                // Full Name input
+                TextField(
+                  controller: _fullNameController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 1),
+                    labelText: 'Full Name',
+                    fillColor: Colors.white,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureConfirmPassword = !_obscureConfirmPassword;
-                    });
-                  },
                 ),
-              ),
-            ),
-            const SizedBox(height: 32.0),
+                const SizedBox(height: 8.0),
 
-            // Sign-Up button
-            _isLoading
-                ? const CircularProgressIndicator()
-                : SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _signUp();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // White background
-                        foregroundColor: Colors.black, // Black text
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                // Email input
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 1),
+                    labelText: 'Email',
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 8.0),
+
+                // Password input with show/hide icon
+                TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(top: 1),
+                    labelText: 'Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.white,
                       ),
-                      child:
-                          const Text('Sign Up', style: TextStyle(fontSize: 22)),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
                     ),
                   ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Already have an account?',
-                    style: TextStyle(color: Colors.white)),
+                ),
+                const SizedBox(height: 8.0),
+
+                // Confirm Password input with show/hide icon
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: _obscureConfirmPassword,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(top: 1),
+                    labelText: 'Confirm Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureConfirmPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32.0),
+
+                // Sign-Up button
+                _isLoading
+                    ? const CircularProgressIndicator()
+                    : SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _signUp();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white, // White background
+                            foregroundColor: Colors.black, // Black text
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          ),
+                          child: const Text('Sign Up',
+                              style: TextStyle(fontSize: 22)),
+                        ),
+                      ),
+                const SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already have an account?',
+                        style: TextStyle(color: Colors.white)),
+                    TextButton(
+                      onPressed: () {
+                        // Navigate to Sign-In screen
+                        Navigator.pushReplacementNamed(context, '/signIn');
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40.0),
                 TextButton(
                   onPressed: () {
-                    // Navigate to Sign-In screen
-                    Navigator.pushReplacementNamed(context, '/signIn');
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
+                  child: const Text("Skip now -->"),
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

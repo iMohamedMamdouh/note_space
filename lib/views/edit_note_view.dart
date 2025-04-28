@@ -31,6 +31,70 @@ class _EditNoteViewState extends State<EditNoteView> {
     super.dispose();
   }
 
+  // Function to show confirmation dialog
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // The user cannot dismiss the dialog by tapping outside it
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey.shade900,
+          title: const Icon(
+            Icons.info_rounded,
+            size: 32,
+            color: Color(0xff606060),
+          ),
+          content: const Text(
+            "Do you want to save the changes made to this note?",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    backgroundColor: const Color(0xffFF0000),
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Discard"),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    backgroundColor: const Color(0xff30BE71),
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    widget.note.title = _titleController.text;
+                    widget.note.content = _contentController.text;
+                    widget.note.save();
+
+                    BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
+
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Keep"),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,15 +112,9 @@ class _EditNoteViewState extends State<EditNoteView> {
                 ),
                 const Spacer(),
                 CustomIcon(
-                  icon: Icons.check,
-                  onPressed: () {
-                    widget.note.title = _titleController.text;
-                    widget.note.content = _contentController.text;
-                    widget.note.save();
-
-                    BlocProvider.of<ReadNotesCubit>(context).featchAllNotes();
-                    Navigator.pop(context); // Navigate back
-                  },
+                  icon: Icons.save,
+                  onPressed:
+                      _showConfirmationDialog, // Show confirmation dialog on icon press
                 ),
                 const SizedBox(width: 16.0), // Add space between icon and title
               ],

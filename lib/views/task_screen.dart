@@ -99,15 +99,14 @@ class _TaskScreenState extends State<TaskScreen> {
                 SnackBar(content: Text('${task['title']} deleted')),
               );
             },
-            background: Container(
-              color: Colors.red, // Background color when swiping
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-            ),
+            // background: Container(
+            //   color: Colors.red, // Background color when swiping
+            //   alignment: Alignment.centerRight,
+            //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            //   child: const Icon(
+            //     Icons.delete,
+            //   ),
+            // ),
             child: GestureDetector(
               onTap: () {
                 _toggleTaskCompletion(
@@ -121,7 +120,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   decoration: BoxDecoration(
                     color: task['isCompleted']
                         ? const Color(0xFF252525)
-                        : const Color.fromARGB(255, 48, 46, 46),
+                        : const Color.fromARGB(255, 121, 119, 119),
                     borderRadius: BorderRadius.circular(12.0),
                     boxShadow: [
                       BoxShadow(
@@ -160,6 +159,9 @@ class _TaskScreenState extends State<TaskScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
         onPressed: _showAddTaskDialog,
         tooltip: 'Add Task', // Show dialog to add new task
         child: const Icon(Icons.add),

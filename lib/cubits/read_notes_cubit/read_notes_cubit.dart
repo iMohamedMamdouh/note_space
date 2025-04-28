@@ -36,11 +36,10 @@ class ReadNotesCubit extends Cubit<ReadNotesState> {
   void restoreNote(NoteModel note) {
     var notesBox = Hive.box<NoteModel>(kNotesBox);
 
-    // Add note back to the active list and delete from the deleted notes list
-    deletedNotes?.remove(note);
-    notesBox.add(note); // Add back to Hive
+    deletedNotes?.remove(note); // نحذف النوتة من قائمة المحذوفات
+    notesBox.add(note); // نرجع النوتة إلى الـ Hive
 
-    emit(ReadNotesRestored(readNotes: readNotes ?? []));
+    emit(ReadNotesDeletedSuccess()); // نبعث حالة جديدة عشان الشاشة تعمل Rebuild
   }
 
   // Fetch deleted notes

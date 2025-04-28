@@ -42,7 +42,7 @@ class NotesApp extends StatelessWidget {
               '/signUp': (context) => const SignUp(),
               '/home': (context) => const NotesView(),
             },
-            initialRoute: '/home',
+            initialRoute: '/signIn',
           );
         },
       ),

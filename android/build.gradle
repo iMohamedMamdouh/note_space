@@ -1,20 +1,21 @@
 // 1. buildscript comes FIRST
 buildscript {
-    ext.kotlin_version = '1.8.10'
+    ext.kotlin_version = '2.1.0'  
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath 'com.google.gms:google-services:4.3.15'
     }
 }
 
+
 // 2. Then plugins block
 plugins {
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.google.gms.google-services") version "4.4.2" apply false  // Correct plugin version
 }
 
 // 3. Then allprojects block
